@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Harga Produk - Bio Charcoal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="topbar">
+        <a class="brand" href="index.html">
+          <img src="assets/logo.svg" alt="Logo Bio Charcoal" />
+          <span>Bio Charcoal</span>
+        </a>
+        <nav class="main-nav">
+          <a href="index.html">Cover</a>
+          <a href="tentang.html">Tentang Kami</a>
+          <a href="keunggulan.html">Keunggulan</a>
+          <a href="spesifikasi.html">Spesifikasi</a>
+          <a class="active" href="harga.html">Harga Produk</a>
+          <a href="aplikasi.html">Aplikasi</a>
+          <a href="mengapa.html">Mengapa Kami</a>
+          <a href="galeri.html">Galeri</a>
+          <a href="kontak.html">Kontak</a>
+        </nav>
+      </header>
+
+      <main class="content">
+        <section class="section-card">
+          <p class="eyebrow">Harga Produk</p>
+          <div class="price-grid">
+            <div class="price-box spec-card">
+              <h3>Daftar Harga</h3>
+              <div class="price-list">
+                <div class="price-item"><span>Briket Kotak</span><strong>Rp 10.000</strong></div>
+                <div class="price-item"><span>Briket Hexagonal</span><strong>Rp 12.000</strong></div>
+              </div>
+              <div class="product-visuals">
+                <div class="product-card">
+                  <img src="https://images.unsplash.com/photo-1519643381401-22c77e60520e?auto=format&fit=crop&w=800&q=80" alt="Briket Kotak" />
+                  <p>Briket Kotak</p>
+                </div>
+                <div class="product-card">
+                  <img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=800&q=80" alt="Briket Hexagonal" />
+                  <p>Briket Hexagonal</p>
+                </div>
+              </div>
+              <div class="stock-panel">
+                <h4>Stok Briket (Privat)</h4>
+                <label>Briket Kotak</label>
+                <input id="stock-kotak" type="number" min="0" value="120" />
+                <label>Briket Hexagonal</label>
+                <input id="stock-hexagonal" type="number" min="0" value="90" />
+                <button class="btn btn-primary" id="save-stock">Simpan Stok</button>
+                <p id="stock-status" style="margin-top:8px; color: var(--accent-2);">Stok tersimpan di browser Anda.</p>
+              </div>
+            </div>
+            <div class="price-box purchase-option">
+              <h3>Opsi Pembelian</h3>
+              <div class="purchase-nav">
+                <button class="purchase-toggle active" data-target="offline-panel">Offline</button>
+                <button class="purchase-toggle" data-target="online-panel">Online</button>
+                <a class="purchase-toggle" href="https://id.shp.ee/kCrB4BYB" target="_blank" rel="noopener">Shopee</a>
+              </div>
+              <div class="purchase-options">
+                <div class="purchase-panel active" id="offline-panel">
+                  <div class="purchase-step">
+                    <strong>1. Pilih metode offline</strong>
+                    <div class="option-row">
+                      <label><input type="radio" name="offline-mode" value="toko" checked /> Ambil ke toko</label>
+                    </div>
+                  </div>
+                  <div class="purchase-step">
+                    <strong>2. Nota transaksi</strong>
+                    <div class="summary-card">
+                      <div class="summary-row">
+                        <span>Produk</span>
+                        <select class="select-box compact" id="product-select">
+                          <option value="10000">Briket Kotak</option>
+                          <option value="12000">Briket Hexagonal</option>
+                        </select>
+                      </div>
+                      <div class="summary-row">
+                        <span>Jumlah pembelian</span>
+                        <input class="select-box compact" id="qty-input" type="number" min="1" value="1" />
+                      </div>
+                      <div class="summary-row">
+                        <span>Total pembelian</span>
+                        <strong id="subtotal-output">Rp 10.000</strong>
+                      </div>
+                      <div class="summary-row">
+                        <span>Total harga</span>
+                        <strong id="total-output">Rp 10.000</strong>
+                      </div>
+                      <div class="summary-row">
+                        <span>Opsi pembayaran</span>
+                        <div class="option-row">
+                          <label><input type="radio" name="offline-payment" value="transfer" checked /> Transfer Bank</label>
+                          <label><input type="radio" name="offline-payment" value="cod" /> COD</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="purchase-step">
+                    <div class="action-row">
+                      <button class="btn btn-primary" id="download-note">Unduh Nota</button>
+                      <a class="btn btn-secondary" id="send-whatsapp" href="https://wa.me/6285787119446?text=Halo%20Bio%20Charcoal%2C%20saya%20ingin%20mengirim%20nota%20transaksi%20offline" target="_blank" rel="noopener">Kirim via WhatsApp</a>
+                    </div>
+                    <div class="note-preview" id="note-preview"></div>
+                  </div>
+                </div>
+                <div class="purchase-panel" id="online-panel">
+                  <div class="purchase-step">
+                    <strong>1. Pilih jasa kirim</strong>
+                    <div class="option-row">
+                      <label><input type="radio" name="shipping" value="jne" checked /> JNE</label>
+                      <label><input type="radio" name="shipping" value="jnt" /> J&T</label>
+                    </div>
+                    <textarea class="select-box" rows="3" placeholder="Masukkan alamat lengkap penerima"></textarea>
+                  </div>
+                  <div class="purchase-step">
+                    <strong>2. Nota transaksi online</strong>
+                    <div class="summary-card">
+                      <div class="summary-row">
+                        <span>Produk</span>
+                        <select class="select-box compact" id="online-product-select">
+                          <option value="10000">Briket Kotak</option>
+                          <option value="12000">Briket Hexagonal</option>
+                        </select>
+                      </div>
+                      <div class="summary-row">
+                        <span>Jumlah pembelian</span>
+                        <input class="select-box compact" id="online-qty-input" type="number" min="1" value="1" />
+                      </div>
+                      <div class="summary-row">
+                        <span>Total pembelian</span>
+                        <strong id="online-subtotal-output">Rp 10.000</strong>
+                      </div>
+                      <div class="summary-row">
+                        <span>Total harga</span>
+                        <strong id="online-total-output">Rp 10.000</strong>
+                      </div>
+                      <div class="summary-row">
+                        <span>Opsi pembayaran</span>
+                        <div class="option-row">
+                          <label><input type="radio" name="online-payment" value="transfer" checked /> Transfer Bank</label>
+                          <label><input type="radio" name="online-payment" value="cod" /> COD</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="purchase-step">
+                    <div class="action-row">
+                      <button class="btn btn-primary" id="download-online-note">Unduh Nota</button>
+                      <a class="btn btn-secondary" id="send-online-whatsapp" href="https://wa.me/6285787119446?text=Halo%20Bio%20Charcoal%2C%20saya%20ingin%20konfirmasi%20pembelian%20online" target="_blank" rel="noopener">Kirim via WhatsApp</a>
+                    </div>
+                    <div class="note-preview" id="online-note-preview"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer class="site-footer">
+        <div class="footer-left">
+          <strong>Bio Charcoal</strong>
+          <p>Premium Coconut Charcoal Briquette</p>
+          <p>Kontak: <a href="https://wa.me/6285787119446" target="_blank" rel="noopener">085787119446</a> | <a href="mailto:biocharcoal@gmail.com">biocharcoal@gmail.com</a></p>
+        </div>
+        <div class="footer-right">
+          <p>Alamat:</p>
+          <p>Jl. Desa Kolam Makmur, RT.06/RW.01, Kecamatan Wanaraya</p>
+        </div>
+      </footer>
+    </div>
+    <div class="price-bar">
+      <div class="price-bar-inner">
+        <span>Harga Briket Kotak: <strong>Rp 10.000</strong></span>
+        <span>Harga Briket Hexagonal: <strong>Rp 12.000</strong></span>
+        <a class="btn btn-primary" href="harga.html">Lihat pembelian</a>
+      </div>
+    </div>
+    <script>
+      const productSelect = document.getElementById("product-select");
+      const qtyInput = document.getElementById("qty-input");
+      const subtotalOutput = document.getElementById("subtotal-output");
+      const totalOutput = document.getElementById("total-output");
+      const notePreview = document.getElementById("note-preview");
+      const downloadNoteButton = document.getElementById("download-note");
+      const sendWhatsappLink = document.getElementById("send-whatsapp");
+      const onlineProductSelect = document.getElementById("online-product-select");
+      const onlineQtyInput = document.getElementById("online-qty-input");
+      const onlineSubtotalOutput = document.getElementById("online-subtotal-output");
+      const onlineTotalOutput = document.getElementById("online-total-output");
+      const onlineNotePreview = document.getElementById("online-note-preview");
+      const downloadOnlineNoteButton = document.getElementById("download-online-note");
+      const sendOnlineWhatsappLink = document.getElementById("send-online-whatsapp");
+      const stockKotakInput = document.getElementById("stock-kotak");
+      const stockHexagonalInput = document.getElementById("stock-hexagonal");
+      const saveStockButton = document.getElementById("save-stock");
+      const stockStatus = document.getElementById("stock-status");
+
+      function formatRupiah(value) {
+        return new Intl.NumberFormat("id-ID", {
+          style: "currency",
+          currency: "IDR",
+          maximumFractionDigits: 0,
+        }).format(value);
+      }
+
+      function updateSummary() {
+        const price = Number(productSelect?.value || 10000);
+        const qty = Math.max(1, Number(qtyInput?.value || 1));
+        const total = price * qty;
+        subtotalOutput.textContent = formatRupiah(total);
+        totalOutput.textContent = formatRupiah(total);
+
+        const productName = productSelect?.selectedOptions?.[0]?.text || "Briket Kotak";
+        const paymentMethod = document.querySelector('input[name="offline-payment"]:checked')?.value === "cod" ? "COD" : "Transfer Bank";
+        const noteText = `Nota Transaksi Bio Charcoal\nProduk: ${productName}\nJumlah Pembelian: ${qty}\nTotal Pembelian: ${formatRupiah(total)}\nMetode Pembayaran: ${paymentMethod}`;
+        notePreview.textContent = noteText;
+        if (sendWhatsappLink) {
+          sendWhatsappLink.href = `https://wa.me/6285787119446?text=${encodeURIComponent(noteText)}`;
+        }
+      }
+
+      function updateOnlineSummary() {
+        const price = Number(onlineProductSelect?.value || 10000);
+        const qty = Math.max(1, Number(onlineQtyInput?.value || 1));
+        const total = price * qty;
+        onlineSubtotalOutput.textContent = formatRupiah(total);
+        onlineTotalOutput.textContent = formatRupiah(total);
+
+        const productName = onlineProductSelect?.selectedOptions?.[0]?.text || "Briket Kotak";
+        const paymentMethod = document.querySelector('input[name="online-payment"]:checked')?.value === "cod" ? "COD" : "Transfer Bank";
+        const noteText = `Nota Transaksi Online Bio Charcoal\nProduk: ${productName}\nJumlah Pembelian: ${qty}\nTotal Pembelian: ${formatRupiah(total)}\nMetode Pembayaran: ${paymentMethod}`;
+        onlineNotePreview.textContent = noteText;
+        if (sendOnlineWhatsappLink) {
+          sendOnlineWhatsappLink.href = `https://wa.me/6285787119446?text=${encodeURIComponent(noteText)}`;
+        }
+      }
+
+      [productSelect, qtyInput].forEach((element) => {
+        element?.addEventListener("input", updateSummary);
+        element?.addEventListener("change", updateSummary);
+      });
+
+      [onlineProductSelect, onlineQtyInput].forEach((element) => {
+        element?.addEventListener("input", updateOnlineSummary);
+        element?.addEventListener("change", updateOnlineSummary);
+      });
+
+      document.querySelectorAll('input[name="offline-payment"]').forEach((radio) => {
+        radio.addEventListener("change", updateSummary);
+      });
+
+      document.querySelectorAll('input[name="online-payment"]').forEach((radio) => {
+        radio.addEventListener("change", updateOnlineSummary);
+      });
+
+      document.querySelectorAll('.purchase-toggle').forEach((button) => {
+        button.addEventListener('click', () => {
+          document.querySelectorAll('.purchase-toggle').forEach((item) => item.classList.remove('active'));
+          document.querySelectorAll('.purchase-panel').forEach((panel) => panel.classList.remove('active'));
+          button.classList.add('active');
+          document.getElementById(button.dataset.target).classList.add('active');
+        });
+      });
+
+      downloadNoteButton?.addEventListener('click', () => {
+        const noteText = notePreview.textContent;
+        const blob = new Blob([noteText], { type: 'text/plain;charset=utf-8' });
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = 'nota-transaksi-bio-charcoal.txt';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        window.URL.revokeObjectURL(url);
+      });
+
+      downloadOnlineNoteButton?.addEventListener('click', () => {
+        const noteText = onlineNotePreview.textContent;
+        const blob = new Blob([noteText], { type: 'text/plain;charset=utf-8' });
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = 'nota-transaksi-online-bio-charcoal.txt';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        window.URL.revokeObjectURL(url);
+      });
+
+      function saveStock() {
+        const data = {
+          kotak: stockKotakInput?.value || "0",
+          hexagonal: stockHexagonalInput?.value || "0"
+        };
+        localStorage.setItem("biocharcoal-stock", JSON.stringify(data));
+        if (stockStatus) {
+          stockStatus.textContent = `Stok tersimpan: Kotak ${data.kotak}, Hexagonal ${data.hexagonal}`;
+        }
+      }
+
+      const savedStock = JSON.parse(localStorage.getItem("biocharcoal-stock") || "{}") || {};
+      if (stockKotakInput) stockKotakInput.value = savedStock.kotak || stockKotakInput.value;
+      if (stockHexagonalInput) stockHexagonalInput.value = savedStock.hexagonal || stockHexagonalInput.value;
+
+      saveStockButton?.addEventListener("click", saveStock);
+      updateSummary();
+      updateOnlineSummary();
+    </script>
+  </body>
+</html>
