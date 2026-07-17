@@ -31,6 +31,10 @@
 
       <main class="content">
         <section class="section-card">
+          <div class="consultation-bar">
+            <a class="btn btn-primary" href="https://wa.me/6285787119446?text=Halo%20Bio%20Charcoal%2C%20saya%20ingin%20konsultasi%20produk" target="_blank" rel="noopener">Konsultasi WhatsApp</a>
+            <a class="btn btn-secondary" href="https://wa.me/6285787119446?text=Halo%20Bio%20Charcoal%2C%20saya%20ingin%20menanyakan%20stok%20dan%20harga" target="_blank" rel="noopener">Tanya Stok & Harga</a>
+          </div>
           <p class="eyebrow">Harga Produk</p>
           <div class="price-grid">
             <div class="price-box spec-card">
@@ -50,13 +54,18 @@
                 </div>
               </div>
               <div class="stock-panel">
-                <h4>Stok Briket (Privat)</h4>
-                <label>Briket Kotak</label>
-                <input id="stock-kotak" type="number" min="0" value="120" />
-                <label>Briket Hexagonal</label>
-                <input id="stock-hexagonal" type="number" min="0" value="90" />
-                <button class="btn btn-primary" id="save-stock">Simpan Stok</button>
-                <p id="stock-status" style="margin-top:8px; color: var(--accent-2);">Stok tersimpan di browser Anda.</p>
+                <h4>Stok Briket</h4>
+                <div class="summary-card">
+                  <div class="summary-row">
+                    <span>Briket Kotak</span>
+                    <strong id="stock-kotak-display">120</strong>
+                  </div>
+                  <div class="summary-row">
+                    <span>Briket Hexagonal</span>
+                    <strong id="stock-hexagonal-display">90</strong>
+                  </div>
+                  <p id="stock-status" style="margin-top:8px; color: var(--accent-2);">Stok akan berkurang otomatis saat pembelian diproses.</p>
+                </div>
               </div>
             </div>
             <div class="price-box purchase-option">
@@ -80,8 +89,8 @@
                       <div class="summary-row">
                         <span>Produk</span>
                         <select class="select-box compact" id="product-select">
-                          <option value="10000">Briket Kotak</option>
-                          <option value="12000">Briket Hexagonal</option>
+                          <option value="10000" data-stock-key="kotak">Briket Kotak</option>
+                          <option value="12000" data-stock-key="hexagonal">Briket Hexagonal</option>
                         </select>
                       </div>
                       <div class="summary-row">
@@ -115,21 +124,50 @@
                 </div>
                 <div class="purchase-panel" id="online-panel">
                   <div class="purchase-step">
-                    <strong>1. Pilih jasa kirim</strong>
-                    <div class="option-row">
-                      <label><input type="radio" name="shipping" value="jne" checked /> JNE</label>
-                      <label><input type="radio" name="shipping" value="jnt" /> J&T</label>
+                    <strong>1. Data pelanggan & alamat</strong>
+                    <div class="summary-card" style="display:grid; gap:10px;">
+                      <label style="display:grid; gap:6px;">
+                        <span>Nama</span>
+                        <input class="select-box compact" id="customer-name" type="text" placeholder="Nama lengkap" />
+                      </label>
+                      <label style="display:grid; gap:6px;">
+                        <span>Provinsi</span>
+                        <input class="select-box compact" id="customer-province" type="text" placeholder="Provinsi" />
+                      </label>
+                      <label style="display:grid; gap:6px;">
+                        <span>Kota</span>
+                        <input class="select-box compact" id="customer-city" type="text" placeholder="Kota" />
+                      </label>
+                      <label style="display:grid; gap:6px;">
+                        <span>Kecamatan</span>
+                        <input class="select-box compact" id="customer-district" type="text" placeholder="Kecamatan" />
+                      </label>
+                      <label style="display:grid; gap:6px;">
+                        <span>Email</span>
+                        <input class="select-box compact" id="customer-email" type="email" placeholder="email@domain.com" />
+                      </label>
+                      <label style="display:grid; gap:6px;">
+                        <span>Nomor WhatsApp</span>
+                        <input class="select-box compact" id="customer-phone" type="tel" placeholder="08xxxxxxxxxx" />
+                      </label>
+                      <label style="display:grid; gap:6px;">
+                        <span>Catatan</span>
+                        <textarea class="select-box" id="customer-note" rows="3" placeholder="Catatan tambahan untuk pesanan"></textarea>
+                      </label>
+                      <label style="display:grid; gap:6px;">
+                        <span>Alamat lengkap</span>
+                        <textarea class="select-box" id="address-input" rows="3" placeholder="Masukkan alamat lengkap penerima"></textarea>
+                      </label>
                     </div>
-                    <textarea class="select-box" rows="3" placeholder="Masukkan alamat lengkap penerima"></textarea>
                   </div>
                   <div class="purchase-step">
-                    <strong>2. Nota transaksi online</strong>
+                    <strong>2. Data pembelian</strong>
                     <div class="summary-card">
                       <div class="summary-row">
                         <span>Produk</span>
                         <select class="select-box compact" id="online-product-select">
-                          <option value="10000">Briket Kotak</option>
-                          <option value="12000">Briket Hexagonal</option>
+                          <option value="10000" data-stock-key="kotak">Briket Kotak</option>
+                          <option value="12000" data-stock-key="hexagonal">Briket Hexagonal</option>
                         </select>
                       </div>
                       <div class="summary-row">
@@ -144,21 +182,45 @@
                         <span>Total harga</span>
                         <strong id="online-total-output">Rp 10.000</strong>
                       </div>
+                    </div>
+                  </div>
+                  <div class="purchase-step">
+                    <strong>3. Metode pembayaran</strong>
+                    <div class="summary-card">
                       <div class="summary-row">
-                        <span>Opsi pembayaran</span>
+                        <span>Metode</span>
                         <div class="option-row">
-                          <label><input type="radio" name="online-payment" value="transfer" checked /> Transfer Bank</label>
-                          <label><input type="radio" name="online-payment" value="cod" /> COD</label>
+                          <label><input type="radio" name="online-payment" value="qris" checked /> QRIS</label>
+                          <label><input type="radio" name="online-payment" value="transfer" /> Transfer Bank</label>
                         </div>
                       </div>
+                      <div class="summary-row">
+                        <span>Pembayaran</span>
+                        <strong id="payment-account-info">QRIS (pembayaran otomatis)</strong>
+                      </div>
+                      <div class="action-row" id="qris-photo-row">
+                        <a class="btn btn-secondary" id="qris-photo-link" href="qris.html" target="_blank" rel="noopener">Lihat Foto QRIS</a>
+                      </div>
+                      <label style="display:flex; align-items:center; gap:8px; margin-top:10px;">
+                        <input type="checkbox" id="payment-confirmed" />
+                        <span>Saya sudah melakukan pembayaran</span>
+                      </label>
+                      <label style="display:grid; gap:6px; margin-top:10px;">
+                        <span>Upload bukti pembayaran</span>
+                        <input class="select-box compact" id="payment-proof-input" type="file" accept="image/*,.pdf" />
+                      </label>
                     </div>
                   </div>
                   <div class="purchase-step">
                     <div class="action-row">
-                      <button class="btn btn-primary" id="download-online-note">Unduh Nota</button>
-                      <a class="btn btn-secondary" id="send-online-whatsapp" href="https://wa.me/6285787119446?text=Halo%20Bio%20Charcoal%2C%20saya%20ingin%20konfirmasi%20pembelian%20online" target="_blank" rel="noopener">Kirim via WhatsApp</a>
+                      <button class="btn btn-primary" id="create-order-btn" type="button" disabled>Buat Pesanan</button>
+                    </div>
+                    <div class="action-row" id="post-order-actions" hidden>
+                      <button class="btn btn-primary" id="download-online-note" type="button" hidden>Unduh Nota</button>
+                      <a class="btn btn-secondary" id="send-online-whatsapp" href="#" target="_blank" rel="noopener" hidden>Konfirmasi WhatsApp</a>
                     </div>
                     <div class="note-preview" id="online-note-preview"></div>
+                    <div class="note-preview" id="order-status" hidden></div>
                   </div>
                 </div>
               </div>
@@ -180,6 +242,7 @@
         </div>
       </footer>
     </div>
+    <script src="script.js"></script>
     <script>
       const productSelect = document.getElementById("product-select");
       const qtyInput = document.getElementById("qty-input");
@@ -195,10 +258,30 @@
       const onlineNotePreview = document.getElementById("online-note-preview");
       const downloadOnlineNoteButton = document.getElementById("download-online-note");
       const sendOnlineWhatsappLink = document.getElementById("send-online-whatsapp");
-      const stockKotakInput = document.getElementById("stock-kotak");
-      const stockHexagonalInput = document.getElementById("stock-hexagonal");
-      const saveStockButton = document.getElementById("save-stock");
+      const stockKotakDisplay = document.getElementById("stock-kotak-display");
+      const stockHexagonalDisplay = document.getElementById("stock-hexagonal-display");
       const stockStatus = document.getElementById("stock-status");
+      const addressInput = document.getElementById("address-input");
+      const customerNameInput = document.getElementById("customer-name");
+      const customerProvinceInput = document.getElementById("customer-province");
+      const customerCityInput = document.getElementById("customer-city");
+      const customerDistrictInput = document.getElementById("customer-district");
+      const customerEmailInput = document.getElementById("customer-email");
+      const customerPhoneInput = document.getElementById("customer-phone");
+      const customerNoteInput = document.getElementById("customer-note");
+      const paymentConfirmCheckbox = document.getElementById("payment-confirmed");
+      const paymentProofInput = document.getElementById("payment-proof-input");
+      const createOrderButton = document.getElementById("create-order-btn");
+      const orderStatus = document.getElementById("order-status");
+      const paymentAccountInfo = document.getElementById("payment-account-info");
+      const postOrderActions = document.getElementById("post-order-actions");
+      const qrisPhotoRow = document.getElementById("qris-photo-row");
+      const stockStorageKey = "biocharcoal-stock";
+      const stockDefaults = { kotak: 120, hexagonal: 90 };
+      const ordersStorageKey = "biocharcoal-orders";
+      const checkoutStorageKey = "biocharcoal-checkout";
+      let stockData = { ...stockDefaults };
+      let latestOrderText = "";
 
       function formatRupiah(value) {
         return new Intl.NumberFormat("id-ID", {
@@ -206,6 +289,57 @@
           currency: "IDR",
           maximumFractionDigits: 0,
         }).format(value);
+      }
+
+      function loadStockData() {
+        try {
+          const saved = JSON.parse(localStorage.getItem(stockStorageKey) || "{}");
+          if (saved && typeof saved === "object") {
+            stockData = {
+              kotak: Number(saved.kotak ?? stockDefaults.kotak),
+              hexagonal: Number(saved.hexagonal ?? stockDefaults.hexagonal),
+            };
+          }
+        } catch (error) {
+          stockData = { ...stockDefaults };
+        }
+      }
+
+      function renderStock() {
+        const kotak = Math.max(0, Number(stockData.kotak || 0));
+        const hexagonal = Math.max(0, Number(stockData.hexagonal || 0));
+        if (stockKotakDisplay) stockKotakDisplay.textContent = kotak;
+        if (stockHexagonalDisplay) stockHexagonalDisplay.textContent = hexagonal;
+        if (stockStatus) {
+          stockStatus.textContent = `Stok tersisa: Kotak ${kotak}, Hexagonal ${hexagonal}`;
+        }
+      }
+
+      function persistStock() {
+        localStorage.setItem(stockStorageKey, JSON.stringify(stockData));
+        renderStock();
+      }
+
+      function getSelectedStockKey(selectElement) {
+        return selectElement?.selectedOptions?.[0]?.getAttribute("data-stock-key") === "hexagonal" ? "hexagonal" : "kotak";
+      }
+
+      function deductStockForPurchase(selectElement, quantityInput) {
+        const stockKey = getSelectedStockKey(selectElement);
+        const requestedQty = Math.max(1, Number(quantityInput?.value || 1));
+        const currentStock = Math.max(0, Number(stockData[stockKey] || 0));
+
+        if (requestedQty > currentStock) {
+          const productName = stockKey === "hexagonal" ? "Briket Hexagonal" : "Briket Kotak";
+          if (stockStatus) {
+            stockStatus.textContent = `Stok ${productName} tidak mencukupi. Tersisa ${currentStock}.`;
+          }
+          return false;
+        }
+
+        stockData[stockKey] = currentStock - requestedQty;
+        persistStock();
+        return true;
       }
 
       function updateSummary() {
@@ -232,11 +366,115 @@
         onlineTotalOutput.textContent = formatRupiah(total);
 
         const productName = onlineProductSelect?.selectedOptions?.[0]?.text || "Briket Kotak";
-        const paymentMethod = document.querySelector('input[name="online-payment"]:checked')?.value === "cod" ? "COD" : "Transfer Bank";
-        const noteText = `Nota Transaksi Online Bio Charcoal\nProduk: ${productName}\nJumlah Pembelian: ${qty}\nTotal Pembelian: ${formatRupiah(total)}\nMetode Pembayaran: ${paymentMethod}`;
+        const paymentMethod = document.querySelector('input[name="online-payment"]:checked')?.value === "transfer" ? "Transfer Bank Mandiri" : "QRIS";
+        const addressText = (addressInput?.value || "").trim();
+        const noteText = `Nota Transaksi Online Bio Charcoal\nProduk: ${productName}\nJumlah Pembelian: ${qty}\nTotal Pembelian: ${formatRupiah(total)}\nAlamat: ${addressText || "Belum diisi"}\nMetode Pembayaran: ${paymentMethod}\nRekening: Mandiri 0310023795324`;
         onlineNotePreview.textContent = noteText;
-        if (sendOnlineWhatsappLink) {
-          sendOnlineWhatsappLink.href = `https://wa.me/6285787119446?text=${encodeURIComponent(noteText)}`;
+        latestOrderText = noteText;
+        if (paymentAccountInfo) {
+          paymentAccountInfo.textContent = paymentMethod === "Transfer Bank Mandiri" ? "Mandiri 0310023795324" : "QRIS (pembayaran otomatis)";
+        }
+        if (qrisPhotoRow) {
+          qrisPhotoRow.hidden = paymentMethod !== "QRIS";
+        }
+        updateCreateOrderButtonState();
+      }
+
+      function updateCreateOrderButtonState() {
+        const customerName = (customerNameInput?.value || "").trim();
+        const customerProvince = (customerProvinceInput?.value || "").trim();
+        const customerCity = (customerCityInput?.value || "").trim();
+        const customerDistrict = (customerDistrictInput?.value || "").trim();
+        const customerEmail = (customerEmailInput?.value || "").trim();
+        const customerPhone = (customerPhoneInput?.value || "").trim();
+        const addressFilled = (addressInput?.value || "").trim().length > 0;
+        const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(customerEmail);
+        const phoneValid = customerPhone.replace(/\D/g, "").length >= 8;
+        const qtyValid = Number(onlineQtyInput?.value || 0) > 0;
+        const paymentConfirmed = paymentConfirmCheckbox?.checked;
+        const proofAttached = Boolean(paymentProofInput?.files?.length);
+        const stockKey = getSelectedStockKey(onlineProductSelect);
+        const requestedQty = Math.max(1, Number(onlineQtyInput?.value || 1));
+        const currentStock = Math.max(0, Number(stockData[stockKey] || 0));
+        const stockEnough = requestedQty <= currentStock;
+        const requiredDataComplete = Boolean(customerName && customerProvince && customerCity && customerDistrict && customerEmail && customerPhone && addressFilled && emailValid && phoneValid);
+
+        if (createOrderButton) {
+          createOrderButton.disabled = !(requiredDataComplete && qtyValid && paymentConfirmed && proofAttached && stockEnough);
+        }
+
+        if (orderStatus) {
+          if (!requiredDataComplete) {
+            orderStatus.hidden = false;
+            orderStatus.textContent = "Lengkapi data pelanggan, alamat, email, nomor WhatsApp, lalu cek kembali sebelum membuat pesanan.";
+          } else if (!paymentConfirmed) {
+            orderStatus.hidden = false;
+            orderStatus.textContent = "Konfirmasi pembayaran terlebih dahulu agar tombol Buat Pesanan aktif.";
+          } else if (!proofAttached) {
+            orderStatus.hidden = false;
+            orderStatus.textContent = "Lampirkan bukti pembayaran sebelum melanjutkan pesanan.";
+          } else if (!stockEnough) {
+            orderStatus.hidden = false;
+            orderStatus.textContent = `Stok ${stockKey === "hexagonal" ? "Briket Hexagonal" : "Briket Kotak"} tidak mencukupi. Tersisa ${currentStock}.`;
+          } else {
+            orderStatus.hidden = true;
+          }
+        }
+      }
+
+      function saveOrder(orderData) {
+        try {
+          const existingOrders = JSON.parse(localStorage.getItem(ordersStorageKey) || "[]");
+          existingOrders.push(orderData);
+          localStorage.setItem(ordersStorageKey, JSON.stringify(existingOrders));
+        } catch (error) {
+          console.error("Gagal menyimpan order", error);
+        }
+      }
+
+      function saveCheckoutDraft() {
+        const draft = {
+          customerName: customerNameInput?.value || "",
+          customerProvince: customerProvinceInput?.value || "",
+          customerCity: customerCityInput?.value || "",
+          customerDistrict: customerDistrictInput?.value || "",
+          customerEmail: customerEmailInput?.value || "",
+          customerPhone: customerPhoneInput?.value || "",
+          customerNote: customerNoteInput?.value || "",
+          address: addressInput?.value || "",
+          product: onlineProductSelect?.value || "10000",
+          qty: onlineQtyInput?.value || "1",
+          paymentMode: document.querySelector('input[name="online-payment"]:checked')?.value || "qris",
+          paymentConfirmed: paymentConfirmCheckbox?.checked || false,
+          paymentProofName: paymentProofInput?.files?.[0]?.name || ""
+        };
+        localStorage.setItem(checkoutStorageKey, JSON.stringify(draft));
+      }
+
+      function restoreCheckoutDraft() {
+        try {
+          const saved = JSON.parse(localStorage.getItem(checkoutStorageKey) || "{}");
+          if (!saved || typeof saved !== "object") return;
+          if (customerNameInput) customerNameInput.value = saved.customerName || "";
+          if (customerProvinceInput) customerProvinceInput.value = saved.customerProvince || "";
+          if (customerCityInput) customerCityInput.value = saved.customerCity || "";
+          if (customerDistrictInput) customerDistrictInput.value = saved.customerDistrict || "";
+          if (customerEmailInput) customerEmailInput.value = saved.customerEmail || "";
+          if (customerPhoneInput) customerPhoneInput.value = saved.customerPhone || "";
+          if (customerNoteInput) customerNoteInput.value = saved.customerNote || "";
+          if (addressInput) addressInput.value = saved.address || "";
+          if (onlineProductSelect) onlineProductSelect.value = saved.product || "10000";
+          if (onlineQtyInput) onlineQtyInput.value = saved.qty || "1";
+          if (paymentConfirmCheckbox) paymentConfirmCheckbox.checked = Boolean(saved.paymentConfirmed);
+          const paymentMode = saved.paymentMode || "qris";
+          const selectedRadio = document.querySelector(`input[name="online-payment"][value="${paymentMode}"]`);
+          if (selectedRadio) selectedRadio.checked = true;
+          if (saved.paymentProofName) {
+            orderStatus.hidden = false;
+            orderStatus.textContent = `Bukti pembayaran terakhir: ${saved.paymentProofName}`;
+          }
+        } catch (error) {
+          console.error("Gagal memulihkan draft checkout", error);
         }
       }
 
@@ -245,9 +483,15 @@
         element?.addEventListener("change", updateSummary);
       });
 
-      [onlineProductSelect, onlineQtyInput].forEach((element) => {
-        element?.addEventListener("input", updateOnlineSummary);
-        element?.addEventListener("change", updateOnlineSummary);
+      [onlineProductSelect, onlineQtyInput, addressInput, customerNameInput, customerProvinceInput, customerCityInput, customerDistrictInput, customerEmailInput, customerPhoneInput, customerNoteInput].forEach((element) => {
+        element?.addEventListener("input", () => {
+          updateOnlineSummary();
+          saveCheckoutDraft();
+        });
+        element?.addEventListener("change", () => {
+          updateOnlineSummary();
+          saveCheckoutDraft();
+        });
       });
 
       document.querySelectorAll('input[name="offline-payment"]').forEach((radio) => {
@@ -256,6 +500,15 @@
 
       document.querySelectorAll('input[name="online-payment"]').forEach((radio) => {
         radio.addEventListener("change", updateOnlineSummary);
+      });
+
+      paymentConfirmCheckbox?.addEventListener("change", () => {
+        updateCreateOrderButtonState();
+        saveCheckoutDraft();
+      });
+      paymentProofInput?.addEventListener("change", () => {
+        updateCreateOrderButtonState();
+        saveCheckoutDraft();
       });
 
       document.querySelectorAll('.purchase-toggle').forEach((button) => {
@@ -268,6 +521,9 @@
       });
 
       downloadNoteButton?.addEventListener('click', () => {
+        if (!deductStockForPurchase(productSelect, qtyInput)) {
+          return;
+        }
         const noteText = notePreview.textContent;
         const blob = new Blob([noteText], { type: 'text/plain;charset=utf-8' });
         const url = window.URL.createObjectURL(blob);
@@ -280,8 +536,97 @@
         window.URL.revokeObjectURL(url);
       });
 
+      sendWhatsappLink?.addEventListener('click', (event) => {
+        if (!deductStockForPurchase(productSelect, qtyInput)) {
+          event.preventDefault();
+        }
+      });
+
+      createOrderButton?.addEventListener('click', () => {
+        const customerName = (customerNameInput?.value || "").trim();
+        const customerProvince = (customerProvinceInput?.value || "").trim();
+        const customerCity = (customerCityInput?.value || "").trim();
+        const customerDistrict = (customerDistrictInput?.value || "").trim();
+        const customerEmail = (customerEmailInput?.value || "").trim();
+        const customerPhone = (customerPhoneInput?.value || "").trim();
+        const customerNote = (customerNoteInput?.value || "").trim();
+        const addressText = (addressInput?.value || "").trim();
+
+        if (!customerName || !customerProvince || !customerCity || !customerDistrict || !customerEmail || !customerPhone || !addressText) {
+          if (orderStatus) {
+            orderStatus.hidden = false;
+            orderStatus.textContent = "Lengkapi semua data pelanggan dan alamat sebelum membuat pesanan.";
+          }
+          return;
+        }
+
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(customerEmail)) {
+          if (orderStatus) {
+            orderStatus.hidden = false;
+            orderStatus.textContent = "Masukkan alamat email yang valid.";
+          }
+          return;
+        }
+
+        if (!paymentConfirmCheckbox?.checked) {
+          if (orderStatus) {
+            orderStatus.hidden = false;
+            orderStatus.textContent = "Silakan centang bahwa pembayaran sudah selesai.";
+          }
+          return;
+        }
+
+        const qty = Math.max(1, Number(onlineQtyInput?.value || 1));
+        const stockKey = getSelectedStockKey(onlineProductSelect);
+        const currentStock = Math.max(0, Number(stockData[stockKey] || 0));
+        if (qty > currentStock) {
+          if (orderStatus) {
+            orderStatus.hidden = false;
+            orderStatus.textContent = `Stok ${stockKey === "hexagonal" ? "Briket Hexagonal" : "Briket Kotak"} tidak mencukupi untuk jumlah tersebut.`;
+          }
+          return;
+        }
+
+        const productName = onlineProductSelect?.selectedOptions?.[0]?.text || "Briket Kotak";
+        const paymentMethod = document.querySelector('input[name="online-payment"]:checked')?.value === "transfer" ? "Transfer Bank Mandiri" : "QRIS";
+        const total = Number(onlineProductSelect?.value || 10000) * qty;
+        const paymentProofName = paymentProofInput?.files?.[0]?.name || "Tidak ada file bukti pembayaran";
+        const orderNumber = `BC-${Date.now().toString().slice(-6)}`;
+        const orderDate = new Date();
+        const orderText = `BIO CHARCOAL\nAlamat: Jl. Desa Kolam Makmur, RT.06/RW.01, Kecamatan Wanaraya\nTanggal: ${orderDate.toLocaleDateString("id-ID", { day: "2-digit", month: "long", year: "numeric" })}\nWaktu: ${orderDate.toLocaleTimeString("id-ID", { hour: "2-digit", minute: "2-digit", second: "2-digit" })}\nNomor Pesanan: ${orderNumber}\n\nData Pelanggan:\nNama: ${customerName}\nProvinsi: ${customerProvince}\nKota: ${customerCity}\nKecamatan: ${customerDistrict}\nEmail: ${customerEmail}\nNomor WhatsApp: ${customerPhone}\nCatatan: ${customerNote || "-"}\n\nDetail Pesanan:\nProduk: ${productName}\nJumlah Pembelian: ${qty}\nTotal Pembelian: ${formatRupiah(total)}\nAlamat Pengiriman: ${addressText}\nMetode Pembayaran: ${paymentMethod}\nRekening: ${paymentMethod === "Transfer Bank Mandiri" ? "Mandiri 0310023795324" : "QRIS"}\nBukti Pembayaran: ${paymentProofName}\nStatus: Menunggu konfirmasi admin.`;
+
+        stockData[stockKey] = currentStock - qty;
+        persistStock();
+        saveOrder({ orderNumber, productName, qty, total, addressText, paymentMethod, createdAt: new Date().toISOString() });
+
+        latestOrderText = orderText;
+        onlineNotePreview.textContent = orderText;
+        if (orderStatus) {
+          orderStatus.hidden = false;
+          orderStatus.textContent = `Pesanan dibuat dengan nomor ${orderNumber}. Informasi dikirimkan ke biocyclenusantara@gmail.com.`;
+        }
+        if (postOrderActions) postOrderActions.hidden = false;
+        if (downloadOnlineNoteButton) downloadOnlineNoteButton.hidden = false;
+        if (sendOnlineWhatsappLink) {
+          sendOnlineWhatsappLink.hidden = false;
+          sendOnlineWhatsappLink.href = `https://wa.me/6285787119446?text=${encodeURIComponent(`Halo Bio Charcoal, saya telah membuat pesanan ${orderNumber}.\n${orderText}`)}`;
+        }
+
+        const mailtoLink = `mailto:biocyclenusantara@gmail.com?subject=${encodeURIComponent(`Permintaan Penawaran Baru - ${orderNumber}`)}&body=${encodeURIComponent(orderText)}`;
+        const blob = new Blob([orderText], { type: 'text/plain;charset=utf-8' });
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = `permintaan-penawaran-bio-charcoal-${orderNumber}.txt`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        window.URL.revokeObjectURL(url);
+        window.open(mailtoLink, '_blank', 'noopener,noreferrer');
+      });
+
       downloadOnlineNoteButton?.addEventListener('click', () => {
-        const noteText = onlineNotePreview.textContent;
+        const noteText = onlineNotePreview.textContent || latestOrderText;
         const blob = new Blob([noteText], { type: 'text/plain;charset=utf-8' });
         const url = window.URL.createObjectURL(blob);
         const link = document.createElement('a');
@@ -293,22 +638,13 @@
         window.URL.revokeObjectURL(url);
       });
 
-      function saveStock() {
-        const data = {
-          kotak: stockKotakInput?.value || "0",
-          hexagonal: stockHexagonalInput?.value || "0"
-        };
-        localStorage.setItem("biocharcoal-stock", JSON.stringify(data));
-        if (stockStatus) {
-          stockStatus.textContent = `Stok tersimpan: Kotak ${data.kotak}, Hexagonal ${data.hexagonal}`;
-        }
+      loadStockData();
+      renderStock();
+      restoreCheckoutDraft();
+      if (sessionStorage.getItem('returnToCheckout') === 'true') {
+        document.querySelector('.purchase-toggle[data-target="online-panel"]')?.click();
+        sessionStorage.removeItem('returnToCheckout');
       }
-
-      const savedStock = JSON.parse(localStorage.getItem("biocharcoal-stock") || "{}") || {};
-      if (stockKotakInput) stockKotakInput.value = savedStock.kotak || stockKotakInput.value;
-      if (stockHexagonalInput) stockHexagonalInput.value = savedStock.hexagonal || stockHexagonalInput.value;
-
-      saveStockButton?.addEventListener("click", saveStock);
       updateSummary();
       updateOnlineSummary();
     </script>
