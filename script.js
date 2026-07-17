@@ -6,10 +6,10 @@
   shell.id = 'bc-ai-widget';
   shell.className = 'bc-ai-widget';
   shell.innerHTML = `
-    <button class="bc-ai-fab" type="button" aria-label="Buka asisten BC AI">BC AI</button>
-    <div class="bc-ai-panel" role="dialog" aria-label="Asisten BC AI">
+    <button class="bc-ai-fab" type="button" aria-label="Buka asisten BioChar AI">BioChar AI</button>
+    <div class="bc-ai-panel" role="dialog" aria-label="Asisten BioChar AI">
       <div class="bc-ai-header">
-        <strong>BC AI</strong>
+        <strong>BioChar AI</strong>
         <button class="bc-ai-close" type="button" aria-label="Tutup chat">×</button>
       </div>
       <div class="bc-ai-messages"></div>
@@ -67,7 +67,7 @@
           body: JSON.stringify({
             model: 'gpt-4o-mini',
             messages: [
-              { role: 'system', content: 'Kamu adalah BC AI untuk Bio Charcoal. Jawab singkat, ramah, dan informatif dalam bahasa Indonesia.' },
+              { role: 'system', content: 'Kamu adalah BioChar AI untuk Bio Charcoal. Jawab ramah, informatif, dan cukup luas dalam bahasa Indonesia sesuai kebutuhan pengguna.' },
               { role: 'user', content: message }
             ],
             temperature: 0.7
@@ -103,5 +103,5 @@
     await askAssistant(text);
   });
 
-  addMessage('assistant', 'Halo! Saya BC AI, asisten Bio Charcoal. Saya siap membantu soal produk, stok, harga, pembayaran, dan alur pembelian.');
+  addMessage('assistant', 'Halo! Saya BioChar AI, asisten Bio Charcoal. Saya siap membantu menjawab pertanyaan seputar produk, stok, harga, pembayaran, alur pembelian, dan informasi lainnya.');
 })();
