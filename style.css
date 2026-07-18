@@ -25,9 +25,15 @@ body {
 
 .bc-ai-widget {
   position: fixed;
-  right: 20px;
-  bottom: 110px;
+  right: var(--bc-ai-right, 20px);
+  bottom: var(--bc-ai-bottom, 110px);
   z-index: 2000;
+  touch-action: none;
+  user-select: none;
+}
+
+.bc-ai-widget.dragging {
+  cursor: grabbing;
 }
 
 .bc-ai-fab {
@@ -39,13 +45,15 @@ body {
   font-weight: 700;
   cursor: pointer;
   box-shadow: 0 10px 24px rgba(0,0,0,0.35);
+  touch-action: manipulation;
 }
 
 .bc-ai-panel {
   position: absolute;
   right: 0;
-  bottom: 60px;
+  bottom: 64px;
   width: min(360px, calc(100vw - 24px));
+  max-height: min(72vh, 420px);
   background: rgba(8, 14, 10, 0.97);
   border: 1px solid var(--border);
   border-radius: 18px;
@@ -53,10 +61,20 @@ body {
   flex-direction: column;
   overflow: hidden;
   box-shadow: 0 16px 36px rgba(0,0,0,0.35);
+  transition: max-height 0.2s ease, transform 0.2s ease;
 }
 
 .bc-ai-panel.open {
   display: flex;
+}
+
+body.bc-ai-keyboard-open .bc-ai-widget {
+  bottom: calc(var(--bc-ai-bottom, 110px) + var(--bc-ai-keyboard-offset, 0px));
+}
+
+body.bc-ai-keyboard-open .bc-ai-panel {
+  bottom: calc(64px + var(--bc-ai-keyboard-offset, 0px));
+  max-height: min(56vh, calc(100vh - 120px - var(--bc-ai-keyboard-offset, 0px)));
 }
 
 .bc-ai-header {
@@ -196,8 +214,34 @@ img {
   font-size: 0.9rem;
 }
 
+.main-nav a.nav-price {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border: 1px solid rgba(255,255,255,0.16);
+  background: linear-gradient(135deg, rgba(255,255,255,0.12), rgba(255,255,255,0.04));
+  color: #fff;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.main-nav a.nav-price span {
+  color: var(--accent-2);
+  font-size: 0.73rem;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+}
+
+.main-nav a.nav-price strong {
+  color: #fff;
+  font-size: 0.9rem;
+}
+
 .main-nav a:hover,
-.main-nav a.active {
+.main-nav a.active,
+.main-nav a.nav-price:hover,
+.main-nav a.nav-price.active {
   color: var(--text);
   background: rgba(255,255,255,0.08);
 }
@@ -569,15 +613,45 @@ th {
   text-align: center;
   font-weight: 600;
   color: #f7e6d8;
+  align-items: center;
+  justify-content: center;
+}
+
+.mini-card img {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 16px;
+  margin-top: 8px;
+  border: 1px solid rgba(255,255,255,0.12);
 }
 
 .gallery-item {
-  min-height: 130px;
+  min-height: 220px;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   color: #f7e6d8;
   font-weight: 600;
+  overflow: hidden;
+  padding: 14px;
+}
+
+.gallery-label {
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  font-size: 0.8rem;
+  color: var(--accent-2);
+}
+
+.gallery-item img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.12);
 }
 
 .contact-list {
